@@ -36,11 +36,13 @@ class SignupSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+    role = serializers.CharField(required=False)
 
     def validate(self, attrs):
         """Authenticates user with given credentials."""
         email = attrs.get('email')
         password = attrs.get('password')
+        role = attrs.get('role')
         assert email and password, "Email and password must both be provided for extraction"
 
         user = authenticate(request=self.context.get('request'), email=email, password=password)
@@ -49,6 +51,9 @@ class LoginSerializer(serializers.Serializer):
         
         if not user.is_active:
             raise AuthenticationFailed("User account is disabled.")
+
+        if role and user.role != role:
+            raise AuthenticationFailed(f"Please use the correct login portal for your role ({user.role}).")
 
         refresh = RefreshToken.for_user(user)
         assert refresh is not None, "Failed to generate JWT token"
@@ -61,7 +66,8 @@ class LoginSerializer(serializers.Serializer):
                 'email': user.email,
                 'name': user.name,
                 'roll_no': user.roll_no,
-                'hall_of_residence': user.hall_of_residence
+                'hall_of_residence': user.hall_of_residence,
+                'role': user.role
             }
         }
 
