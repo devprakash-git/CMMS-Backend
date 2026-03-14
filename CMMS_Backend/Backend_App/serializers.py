@@ -14,11 +14,11 @@ class HallSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    hall_name = serializers.CharField(source='hall_of_residence.name', read_only=True)
+    hall_of_residence = serializers.CharField(source='hall_of_residence.name', read_only=True)
     
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'roll_no', 'hall_of_residence', 'hall_name', 'room_no', 'contact_no', 'role']
+        fields = ['id', 'email', 'name', 'roll_no', 'hall_of_residence', 'room_no', 'contact_no', 'role']
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:

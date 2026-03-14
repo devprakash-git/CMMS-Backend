@@ -59,6 +59,17 @@ class NotificationListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class MarkNotificationsSeenView(APIView):
+    """
+    API View to mark all unseen notifications as seen for the authenticated user.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        updated_count = Notification.objects.filter(user=request.user, category='unseen').update(category='seen')
+        return Response({"message": f"{updated_count} notifications marked as seen."}, status=status.HTTP_200_OK)
+
+
 class SignupView(APIView):
     """
     API View to handle user registration.

@@ -7,13 +7,15 @@ from .views import (
     ResetPasswordTemplateView,
     HallListView,
     UserProfileView,
-    NotificationListView
+    NotificationListView,
+    MarkNotificationsSeenView
 )
 
 urlpatterns = [
     path('halls/', HallListView.as_view(), name='halls'),
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('notifications/', NotificationListView.as_view(), name='notifications'),
+    path('notifications/mark-seen/', MarkNotificationsSeenView.as_view(), name='mark-notifications-seen'),
     path('signup/', SignupView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
