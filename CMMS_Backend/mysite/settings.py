@@ -181,12 +181,10 @@ CORS_ALLOW_CREDENTIALS = True
 
 # --- Security & Cookies ---
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = os.getenv("DEBUG", "False") != "True" # Force HTTPS in Prod
-# SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
-# CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
-SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = os.getenv("DEBUG", "False") != "True" # Force HTTPS in Prod
+SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
+CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
+
 
 # If frontend and backend are on different domains (e.g., Vercel vs Railway)
 # you often need SameSite='None' for cookies to work.
